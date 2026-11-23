@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alexy Dev</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: una sola columna tipo terminal/README; encabezado con prompt de consola, secciones separadas por etiquetas monoespaciadas. */
+:root {
+  --bg: #f3f5f2;
+  --surface: #ffffff;
+  --fg: #16201b;
+  --muted: #53635a;
+  --line: #d3dcd5;
+  --accent: #0b6b4f;
+  --accent-soft: #dcefe6;
+  --flag: #b3261e;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1613; --surface: #17211c; --fg: #e6efe9; --muted: #9db0a4;
+    --line: #2a3a32; --accent: #5fd3a3; --accent-soft: #1b3329; --flag: #ff8a80;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1613; --surface: #17211c; --fg: #e6efe9; --muted: #9db0a4;
+  --line: #2a3a32; --accent: #5fd3a3; --accent-soft: #1b3329; --flag: #ff8a80;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.65;
+  padding-block: 2.5rem 3rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 44rem; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem; }
+.prompt { font-family: var(--font-mono); font-size: .85rem; color: var(--muted); margin: 0 0 1rem; overflow-wrap: anywhere; }
+.prompt b { color: var(--accent); font-weight: 500; }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.2rem, 8vw, 3.4rem); line-height: 1.05; letter-spacing: -.02em; margin: 0 0 .75rem; text-wrap: balance; }
+.role { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; color: var(--accent); margin: 0 0 .5rem; text-wrap: balance; }
+.uci { margin: 0; color: var(--muted); display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+.uci i { display: inline-block; width: 1.6rem; height: 1rem; border: 1px solid var(--line); border-radius: 2px;
+  background: linear-gradient(var(--bg) 0 0) padding-box,
+  repeating-linear-gradient(to bottom, #002a8f 0 20%, #fff 20% 40%) border-box; }
+.cuba-flag { width: 1.6rem; height: 1rem; flex: none; }
+h2 { font-family: var(--font-mono); font-weight: 500; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 1rem; display: flex; align-items: center; gap: .75rem; }
+h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+p { margin: 0 0 1rem; max-width: 65ch; }
+strong { font-weight: 500; color: var(--fg); background: var(--accent-soft); padding: 0 .25em; border-radius: 2px; }
+ul.focus { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+ul.focus li { padding: .7rem 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; min-width: 0; }
+ul.focus span { font-family: var(--font-mono); font-size: .75rem; color: var(--accent); display: block; margin-bottom: .1rem; }
+.stack { display: grid; gap: 1.5rem; }
+.group h3 { font-family: var(--font-display); font-size: 1rem; margin: 0 0 .6rem; font-weight: 500; }
+.group h3 small { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); font-weight: 400; margin-left: .4rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; padding: 0; margin: 0; list-style: none; }
+.chips li { font-family: var(--font-mono); font-size: .85rem; padding: .3rem .7rem; border: 1px solid var(--line); background: var(--surface); border-radius: 3px; }
+.chips.main li { border-color: var(--accent); color: var(--accent); }
+.links { display: flex; flex-wrap: wrap; gap: .75rem; }
+.links a { font-family: var(--font-mono); font-size: .9rem; color: var(--bg); background: var(--accent); padding: .55rem 1rem; border-radius: 3px; text-decoration: none; }
+.links a:hover { filter: brightness(1.1); }
+a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+footer { font-family: var(--font-mono); font-size: .85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1.25rem; }
+footer::before { content: "$ "; color: var(--accent); }
+@media (min-width: 560px) { ul.focus { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+</head>
+<body>
+
+<main>
+  <header>
+    <p class="prompt"><b>alexy@uci</b>:~$ cat README.md</p>
+    <h1>Hola, soy Alexy</h1>
+    <p class="role">Desarrollador Web Fullstack Junior · Backend con Python/Django</p>
+    <p class="uci">
+      <svg class="cuba-flag" viewBox="0 0 24 15" role="img" aria-label="Bandera de Cuba"><rect width="24" height="15" fill="#fff"/><g fill="#002a8f"><rect y="0" width="24" height="3"/><rect y="6" width="24" height="3"/><rect y="12" width="24" height="3"/></g><path d="M0 0l11 7.5L0 15z" fill="#cf142b"/><path d="M3.6 5.6l.7 1.9h2l-1.6 1.2.6 1.9-1.7-1.2-1.7 1.2.6-1.9L.9 7.5h2z" fill="#fff"/></svg>
+      Estudiante de la Universidad de las Ciencias Informáticas (UCI)
+    </p>
+  </header>
+
+  <section aria-labelledby="sobre">
+    <h2 id="sobre">Sobre mí</h2>
+    <p>Soy estudiante de la <strong>UCI</strong> y me estoy formando como <strong>Desarrollador Web Fullstack Junior</strong>. Mi especialidad es el <strong>backend con Python y Django</strong>: modelado de datos, APIs REST, autenticación y lógica de negocio. También tengo conocimientos <strong>básicos de frontend</strong> para construir interfaces funcionales y conectarlas con mis servicios.</p>
+    <ul class="focus">
+      <li><span>estudiando</span>Ciencias Informáticas en la UCI</li>
+      <li><span>profundizando</span>Arquitectura de APIs y buenas prácticas con Django</li>
+      <li><span>aprendiendo</span>Más de frontend, testing y despliegue</li>
+      <li><span>abierto a</span>Prácticas, proyectos colaborativos y oportunidades junior</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="tec">
+    <h2 id="tec">Tecnologías</h2>
+    <div class="stack">
+      <div class="group">
+        <h3>Backend <small>especialidad</small></h3>
+        <ul class="chips main"><li>Python</li><li>Django</li><li>Django REST Framework</li><li>PostgreSQL</li><li>SQLite</li></ul>
+      </div>
+      <div class="group">
+        <h3>Frontend <small>nivel básico</small></h3>
+        <ul class="chips"><li>HTML5</li><li>CSS3</li><li>JavaScript</li><li>Bootstrap</li></ul>
+      </div>
+      <div class="group">
+        <h3>Herramientas</h3>
+        <ul class="chips"><li>Git</li><li>GitHub</li><li>VS Code</li><li>Linux</li><li>Postman</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="gh">
+    <h2 id="gh">GitHub</h2>
+    <div class="links"><a href="https://github.com/AlexyDev9901" target="_blank" rel="noopener">github.com/AlexyDev9901</a></div>
+  </section>
+
+  <footer>Siempre aprendiendo, siempre construyendo.</footer>
+</main>
+</body>
+</html>
